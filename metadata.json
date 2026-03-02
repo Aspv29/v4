@@ -1,0 +1,5 @@
+{
+  "name": "Remix: MENSAJE DE CONFIRMACION - HOTEL TALAVERA V2",
+  "description": "A web-based reservation confirmation tool for Hotel Talavera. Allows staff to generate, preview, and download PDF booking confirmations.",
+  "requestFramePermissions": []
+}

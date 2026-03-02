@@ -1,0 +1,76 @@
+{
+  "name": "hotel-talavera-v3",
+  "private": true,
+  "version": "3.0.0",
+  "type": "module",
+  "author": "Hotel Talavera",
+  "description": "Sistema de Concierge Premium - Hotel Talavera v3",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "cap:sync": "npx cap sync android",
+    "build:android": "npm run build && npm run cap:sync",
+    "create-debug-apk": "npm run build:android && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ../TalaveraV3-debug.apk",
+    "electron:dev": "concurrently \"npm run dev\" \"electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:build:win": "npm run build && electron-builder --win --x64"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.1.0",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/share": "^8.0.1",
+    "@google/genai": "^1.37.0",
+    "@google/generative-ai": "^0.24.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.0.0",
+    "jszip": "3.10.1",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.1.2",
+    "concurrently": "^9.1.2",
+    "electron": "^35.2.0",
+    "electron-builder": "^26.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^7.3.1"
+  },
+  "build": {
+    "appId": "com.talavera.confirmacion",
+    "productName": "Talavera v3",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "build/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "TalaveraV3-Setup-${version}.${ext}",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Talavera v3"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#c68652" />
+    <title>Hotel Talavera - Confirmation System</title>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/201/201623.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              gold: {
+                50: '#fbf8f1',
+                100: '#f5efe0',
+                200: '#eaddc2',
+                300: '#dec29a',
+                400: '#d2a373',
+                500: '#c68652',
+                600: '#ba6e45',
+                700: '#9b563b',
+                800: '#7f4536',
+                900: '#663a2e',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #f8fafc;
+        overscroll-behavior-y: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        /* SCROLL ENABLED IN ALL DIRECTIONS */
+        overflow: auto; 
+      }
+      
+      #root {
+        min-height: 100vh;
+        width: 100vw;
+      }
+
+      /* Custom Scrollbar for Windows Exe elegance */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px; /* Also style horizontal scrollbar */
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c68652; 
+        border-radius: 5px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #9b563b; 
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>

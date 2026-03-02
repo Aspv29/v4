@@ -1,0 +1,89 @@
+name: 🏨 Build Talavera v3 Premium APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Tipo de compilación'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+
+jobs:
+  build-apk:
+    name: 📱 Compilar APK Premium Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+
+    steps:
+      - name: 📥 Checkout código fuente
+        uses: actions/checkout@v4
+
+      - name: ☕ Configurar Java 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: 🔧 Instalar dependencias npm
+        run: npm ci
+
+      - name: 🏗️ Compilar proyecto Vite (npm run build)
+        run: npm run build
+
+      - name: 📱 Sincronizar con Capacitor Android
+        run: npx cap sync android
+
+      - name: 🔑 Dar permisos de ejecución a Gradle
+        run: chmod +x android/gradlew
+
+      - name: 📋 Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: 🔨 Compilar APK Debug con Gradle
+        working-directory: android
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Xmx3g"
+
+      - name: 📂 Copiar APK con nombre premium
+        run: |
+          mkdir -p artifacts
+          cp android/app/build/outputs/apk/debug/app-debug.apk artifacts/Talavera_v3-Premium.apk
+          echo "✅ APK generado exitosamente"
+          ls -lh artifacts/
+
+      - name: 📊 Información del APK
+        run: |
+          echo "=== 🏨 Talavera v3 Premium APK ==="
+          echo "Archivo: Talavera_v3-Premium.apk"
+          echo "Tamaño: $(du -sh artifacts/Talavera_v3-Premium.apk | cut -f1)"
+          echo "Package: com.talavera.confirmacion.debug"
+          echo "VersionCode: 3"
+          echo "VersionName: 3.0-DEBUG"
+          echo "=================================="
+
+      - name: 🚀 Subir APK como Artifact descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: Talavera_v3-Premium-APK
+          path: artifacts/Talavera_v3-Premium.apk
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: ✅ Compilación exitosa
+        run: |
+          echo "🎉 APK compilado y disponible para descarga!"
+          echo "📥 Ve a Actions > este workflow > Artifacts para descargar Talavera_v3-Premium.apk"
