@@ -1,10 +1,10 @@
 {
-  "name": "hotel-talavera-v3",
+  "name": "hotel-talavera-v4",
   "private": true,
-  "version": "3.0.0",
+  "version": "4.0.0",
   "type": "module",
   "author": "Hotel Talavera",
-  "description": "Sistema de Concierge Premium - Hotel Talavera v3",
+  "description": "Sistema de Concierge Premium - Hotel Talavera v4 - Multi-Room & WhatsApp Direct",
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
