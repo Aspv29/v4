@@ -14,7 +14,7 @@
 
 #### Sistema Multi-Habitación
 - **Toggle para modo multi-habitación**: Permite activar/desactivar reservas con múltiples tipos de habitación
-- **Selector individual por habitación**: Cada habitación puede tener un tipo diferente (Estándar, Deluxe, Suite)
+- **Selector individual por habitación**: Cada habitación puede tener un tipo diferente (Estándar King Size, Doble Queen Size, Suite)
 - **Componente MultiRoomSelector**: Nuevo componente para gestionar múltiples habitaciones
 - **Cálculo automático por tipo**:
   - Subtotales por tipo de habitación
