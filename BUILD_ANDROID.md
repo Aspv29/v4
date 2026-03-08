@@ -1,4 +1,4 @@
-# Guía de Compilación para Android - Hotel Talavera v3
+# Guía de Compilación para Android - Hotel Talavera v4.0.0
 
 ## Requisitos Previos
 
@@ -70,7 +70,7 @@ npm install
 # 2. Compilar y crear APK debug
 npm run create-debug-apk
 
-# El APK estará en: TalaveraV3-debug.apk
+# El APK estará en: TalaveraV4-debug.apk
 ```
 
 ### Método 2: Paso a paso
@@ -152,7 +152,7 @@ chmod +x android/gradlew
 
 ### En emulador:
 ```bash
-adb install TalaveraV3-debug.apk
+adb install TalaveraV4-debug.apk
 ```
 
 ## Características de la Aplicación
@@ -184,5 +184,5 @@ Para reportar problemas o sugerencias:
 
 ---
 
-**Hotel Talavera v3** - Sistema de Concierge Premium
+**Hotel Talavera v4.0.0** - Sistema de Concierge Premium
 © 2026 Hotel Talavera. Todos los derechos reservados.
