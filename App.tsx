@@ -238,8 +238,14 @@ const App: React.FC = () => {
       }];
     }
 
-    // Extra persons calculation (Only for Suites)
-    const extraPersons = bookingData.roomType === RoomType.SUITE ? (bookingData.extraPersons || 0) : 0;
+    // Extra persons calculation
+    // In multi-room mode, extra-person charges are not applied because `roomType`
+    // may be stale and extras are not tracked per-room.
+    let extraPersons = 0;
+    if (!bookingData.rooms || bookingData.rooms.length === 0) {
+      // Single-room mode: apply extra-person charges only for Suites
+      extraPersons = bookingData.roomType === RoomType.SUITE ? (bookingData.extraPersons || 0) : 0;
+    }
     const extraCost = extraPersons * EXTRA_PERSON_COST * nights;
     totalCost += extraCost;
 
