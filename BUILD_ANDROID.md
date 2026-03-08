@@ -70,7 +70,7 @@ npm install
 # 2. Compilar y crear APK debug
 npm run create-debug-apk
 
-# El APK estará en: TalaveraV4-debug.apk
+# El APK estará en: TalaveraV3-debug.apk
 ```
 
 ### Método 2: Paso a paso
