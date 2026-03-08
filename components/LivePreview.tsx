@@ -46,7 +46,7 @@ const LivePreview = forwardRef<HTMLDivElement, LivePreviewProps>(({ data, summar
               </div>
 
               <div className="mb-6 text-xs text-justify leading-relaxed">
-                Estimad{data.firstName.toLowerCase().includes('a') || data.firstName.toLowerCase().includes('e') ? 'a' : 'o'} {data.firstName} {data.lastName}, Es un placer confirmar tu próxima visita. Hemos preparado cada detalle para que disfrutes de una experiencia inolvidable con nosotros. A continuación, los detalles de tu reservación:
+                Estimado/a {data.firstName} {data.lastName}, es un placer confirmar tu próxima visita. Hemos preparado cada detalle para que disfrutes de una experiencia inolvidable con nosotros. A continuación, los detalles de tu reservación:
               </div>
 
               <div className="mb-6">
