@@ -383,6 +383,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               checkInDate={data.checkIn}
             />
           ) : (
+            <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
               <label className={`block text-sm font-bold mb-1 flex items-center gap-2 ${brandColor} dark:text-blue-400`}>
@@ -490,6 +491,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               </div>
             </div>
           )}
+          </>
           )}
         </div>
 
