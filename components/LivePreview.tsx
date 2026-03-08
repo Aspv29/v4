@@ -55,7 +55,25 @@ const LivePreview = forwardRef<HTMLDivElement, LivePreviewProps>(({ data, summar
                   <div className="flex gap-1"><span>❖</span><span className="font-bold">Número de Confirmación:</span><span className="uppercase">{summary.folio}</span></div>
                   <div className="flex gap-1"><span>❖</span><span className="font-bold">Check-in:</span><span>{formatDate(data.checkIn)} | 15:00 hrs</span></div>
                   <div className="flex gap-1"><span>❖</span><span className="font-bold">Check-out:</span><span>{formatDate(data.checkOut)} | 13:00 hrs</span></div>
-                  <div className="flex gap-1"><span>❖</span><span className="font-bold">Habitación:</span><span className="uppercase">{displayRoomType} ({data.numberOfRooms} habitación{data.numberOfRooms > 1 ? 'es' : ''}, {summary.nights} noche{summary.nights !== 1 ? 's' : ''})</span></div>
+                  <div className="flex gap-1">
+                    <span>❖</span>
+                    <span className="font-bold">Habitación:</span>
+                    <span className="uppercase">
+                      {(() => {
+                        if (summary.roomBreakdown && summary.roomBreakdown.length > 0) {
+                          const totalRooms = summary.roomBreakdown.reduce(
+                            (sum, room) => sum + room.quantity,
+                            0
+                          );
+                          const roomTypesLabel = summary.roomBreakdown
+                            .map((room) => `${room.quantity} ${room.roomType}`)
+                            .join(' + ');
+                          return `${roomTypesLabel} (${totalRooms} habitación${totalRooms > 1 ? 'es' : ''}, ${summary.nights} noche${summary.nights !== 1 ? 's' : ''})`;
+                        }
+                        return `${displayRoomType} (${data.numberOfRooms} habitación${data.numberOfRooms > 1 ? 'es' : ''}, ${summary.nights} noche${summary.nights !== 1 ? 's' : ''})`;
+                      })()}
+                    </span>
+                  </div>
                 </div>
               </div>
 
