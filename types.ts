@@ -4,6 +4,11 @@ export enum RoomType {
   SUITE = "SUITE"
 }
 
+export interface RoomSelection {
+  roomType: RoomType;
+  quantity: number;
+}
+
 export interface BookingData {
   firstName: string;
   lastName: string;
@@ -11,7 +16,16 @@ export interface BookingData {
   checkOut: string;
   roomType: RoomType;
   numberOfRooms: number;
-  extraPersons: number; 
+  extraPersons: number;
+  // New multi-room support
+  rooms?: RoomSelection[];
+}
+
+export interface RoomCostBreakdown {
+  roomType: RoomType;
+  quantity: number;
+  pricePerNight: number;
+  subtotal: number;
 }
 
 export interface BookingSummary {
@@ -19,6 +33,8 @@ export interface BookingSummary {
   nights: number;
   pricePerNight: number;
   totalCost: number;
+  // New multi-room breakdown
+  roomBreakdown?: RoomCostBreakdown[];
 }
 
 export interface ArchivedBooking {

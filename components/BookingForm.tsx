@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { BookingData, RoomType, getRoomPrice, getMaxRooms, MAX_EXTRA_PERSONS, EXTRA_PERSON_COST } from '../types';
-import { Calendar as CalendarIcon, User, CreditCard, FileText, Image as ImageIcon, ChevronLeft, ChevronRight, Loader2, AlertCircle, Hash, Minus, Plus, Share2, Users } from 'lucide-react';
+import { BookingData, RoomType, getRoomPrice, getMaxRooms, MAX_EXTRA_PERSONS, EXTRA_PERSON_COST, RoomSelection } from '../types';
+import { Calendar as CalendarIcon, User, CreditCard, FileText, Image as ImageIcon, ChevronLeft, ChevronRight, Loader2, AlertCircle, Hash, Minus, Plus, Share2, Users, MessageCircle, LayoutGrid } from 'lucide-react';
+import WhatsAppDirectChat from './WhatsAppDirectChat';
+import MultiRoomSelector from './MultiRoomSelector';
 
 interface BookingFormProps {
   data: BookingData;
@@ -23,9 +25,15 @@ const BookingForm: React.FC<BookingFormProps> = ({
   isValid, 
   isGenerating 
 }) => {
-  
+
   // Calendar state
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  // WhatsApp Direct Chat state
+  const [showWhatsAppChat, setShowWhatsAppChat] = useState(false);
+
+  // Multi-room mode toggle
+  const [multiRoomMode, setMultiRoomMode] = useState(false);
 
   const maxRooms = getMaxRooms(data.roomType);
   
@@ -334,9 +342,48 @@ const BookingForm: React.FC<BookingFormProps> = ({
           </div>
         </div>
 
+        {/* Multi-Room Mode Toggle */}
+        <div className="border border-gray-200 dark:border-slate-700 rounded-xl p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 transition-colors">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <LayoutGrid className="text-[#1a237e] dark:text-blue-400" size={20} />
+              <div>
+                <div className="font-bold text-sm text-[#1a237e] dark:text-blue-400">
+                  Modo Múltiples Habitaciones
+                </div>
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                  Selecciona diferentes tipos de habitación
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMultiRoomMode(!multiRoomMode)}
+              className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors ${
+                multiRoomMode
+                  ? 'bg-[#1a237e] dark:bg-blue-600'
+                  : 'bg-gray-300 dark:bg-slate-600'
+              }`}
+            >
+              <span
+                className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+                  multiRoomMode ? 'translate-x-8' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+
         {/* Room Selection Grid */}
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {multiRoomMode ? (
+            <MultiRoomSelector
+              rooms={data.rooms || []}
+              onChange={(rooms: RoomSelection[]) => handleChange('rooms', rooms)}
+              checkInDate={data.checkIn}
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
               <label className={`block text-sm font-bold mb-1 flex items-center gap-2 ${brandColor} dark:text-blue-400`}>
                 <CreditCard size={16} /> TIPO DE HABITACIÓN
@@ -443,11 +490,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
               </div>
             </div>
           )}
+          )}
         </div>
-        
-        <p className={`text-right text-sm ${brandColor} dark:text-blue-400 font-bold mt-1`}>
-          Precio Unitario: ${getRoomPrice(data.roomType, data.checkIn).toFixed(2)} MXN
-        </p>
+
+        {!multiRoomMode && (
+          <p className={`text-right text-sm ${brandColor} dark:text-blue-400 font-bold mt-1`}>
+            Precio Unitario: ${getRoomPrice(data.roomType, data.checkIn).toFixed(2)} MXN
+          </p>
+        )}
 
         {/* Validation Warning - UPDATED STYLE: Yellow Background, Bold Black Text */}
         {!isValid && (
@@ -457,9 +507,19 @@ const BookingForm: React.FC<BookingFormProps> = ({
           </div>
         )}
 
+        {/* WhatsApp Direct Chat Button */}
+        <button
+          type="button"
+          onClick={() => setShowWhatsAppChat(true)}
+          className="w-full py-3 px-4 rounded-xl font-bold text-white shadow-lg transform transition-all duration-200 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20BA5A] hover:shadow-green-200 hover:-translate-y-0.5"
+        >
+          <MessageCircle className="w-5 h-5" />
+          <span className="text-sm">Abrir WhatsApp Directo</span>
+        </button>
+
         {/* Action Buttons - Visually Distinct */}
         <div className="pt-2 grid grid-cols-2 gap-4">
-          
+
           {/* PDF Buttons Group */}
           <div className="col-span-1 flex gap-2">
             <button
@@ -524,6 +584,9 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         </div>
       </div>
+
+      {/* WhatsApp Direct Chat Dialog */}
+      <WhatsAppDirectChat isOpen={showWhatsAppChat} onClose={() => setShowWhatsAppChat(false)} />
     </div>
   );
 };

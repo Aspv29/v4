@@ -1,0 +1,85 @@
+<!-- Hotel Talavera Logo - Foreground Layer -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Logo centered with proper padding -->
+    <group
+        android:translateX="54"
+        android:translateY="54">
+
+        <!-- Center Circle -->
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-3.5 A 3.5 3.5 0 1 1 0,3.5 A 3.5 3.5 0 1 1 0,-3.5 Z"/>
+
+        <!-- 8 Petals -->
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="0"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="45"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="90"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="135"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="180"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="225"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="270"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-7 Q 8.5,-18 0,-30 Q -8.5,-18 0,-7"
+            android:rotation="315"/>
+
+        <!-- 8 Dots around the petals -->
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="22.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="67.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="112.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="157.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="202.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="247.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="292.5"/>
+        <path
+            android:fillColor="#1a237e"
+            android:pathData="M 0,-25.5 A 2.5 2.5 0 1 1 0,-20.5 A 2.5 2.5 0 1 1 0,-25.5 Z"
+            android:rotation="337.5"/>
+    </group>
+</vector>

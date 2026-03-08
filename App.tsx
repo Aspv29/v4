@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { BookingData, BookingSummary, RoomType, getRoomPrice, getMaxRooms, EXTRA_PERSON_COST, TerraceEventData } from './types';
+import { BookingData, BookingSummary, RoomType, getRoomPrice, getMaxRooms, EXTRA_PERSON_COST, TerraceEventData, RoomCostBreakdown } from './types';
 import BookingForm from './components/BookingForm';
 import LivePreview from './components/LivePreview';
 import LockScreen from './components/LockScreen';
@@ -52,7 +52,8 @@ const App: React.FC = () => {
     checkOut: '',
     roomType: RoomType.STANDARD,
     numberOfRooms: 1,
-    extraPersons: 0
+    extraPersons: 0,
+    rooms: []
   });
 
   // Initialize event state
@@ -205,20 +206,49 @@ const App: React.FC = () => {
       nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
-    const pricePerNight = getRoomPrice(bookingData.roomType, bookingData.checkIn);
-    
-    // Cost calculation
-    const roomsCost = nights * pricePerNight * (bookingData.numberOfRooms || 1);
-    
+    let totalCost = 0;
+    let roomBreakdown: RoomCostBreakdown[] = [];
+
+    // Check if using multi-room system
+    if (bookingData.rooms && bookingData.rooms.length > 0) {
+      // Calculate based on room selections
+      bookingData.rooms.forEach(room => {
+        if (room.quantity > 0) {
+          const price = getRoomPrice(room.roomType, bookingData.checkIn);
+          const subtotal = nights * price * room.quantity;
+          totalCost += subtotal;
+          roomBreakdown.push({
+            roomType: room.roomType,
+            quantity: room.quantity,
+            pricePerNight: price,
+            subtotal: subtotal
+          });
+        }
+      });
+    } else {
+      // Fallback to single room type
+      const pricePerNight = getRoomPrice(bookingData.roomType, bookingData.checkIn);
+      const roomsCost = nights * pricePerNight * (bookingData.numberOfRooms || 1);
+      totalCost = roomsCost;
+      roomBreakdown = [{
+        roomType: bookingData.roomType,
+        quantity: bookingData.numberOfRooms,
+        pricePerNight: pricePerNight,
+        subtotal: roomsCost
+      }];
+    }
+
     // Extra persons calculation (Only for Suites)
     const extraPersons = bookingData.roomType === RoomType.SUITE ? (bookingData.extraPersons || 0) : 0;
     const extraCost = extraPersons * EXTRA_PERSON_COST * nights;
-    
+    totalCost += extraCost;
+
     return {
       folio,
       nights: nights > 0 ? nights : 0,
-      pricePerNight,
-      totalCost: roomsCost + extraCost
+      pricePerNight: roomBreakdown.length > 0 ? roomBreakdown[0].pricePerNight : 0,
+      totalCost,
+      roomBreakdown
     };
   }, [bookingData]);
 
