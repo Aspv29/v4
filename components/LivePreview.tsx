@@ -41,53 +41,114 @@ const LivePreview = forwardRef<HTMLDivElement, LivePreviewProps>(({ data, summar
                 <Logo className="w-48 h-auto" color="#1a237e" />
               </div>
 
-              <div className="mb-6 text-sm text-justify font-normal uppercase tracking-normal leading-relaxed">
-                ESTIMADO HUÉSPED, PARA HOTEL TALAVERA ES UN PLACER CONFIRMAR SU RESERVACIÓN CON LOS SIGUIENTES DATOS:
+              <div className="text-center mb-6 text-xs uppercase tracking-wide">
+                <p className="font-bold">¡Todo listo para tu estancia en Hotel Talavera!</p>
               </div>
 
-              <div className="space-y-4 text-sm mb-8 font-normal uppercase tracking-wide text-gray-900">
-                <div className="flex gap-2">
-                  <span className="font-bold">NÚMERO DE RESERVACIÓN:</span><span className="font-bold">{summary.folio}</span>
-                </div>
-                <div>
-                  <div className="mb-1 font-bold">HUÉSPED:</div>
-                  <div className="ml-4">{data.firstName} {data.lastName}</div>
-                </div>
-                <div className="ml-4 space-y-1">
-                   <div><span className="font-bold">FECHA DE LLEGADA:</span> {formatDate(data.checkIn)} <span className="font-bold text-red-700">CHECK IN:</span> <span className="font-bold text-red-700 underline">15:00 HRS</span></div>
-                   <div><span className="font-bold">FECHA DE SALIDA:</span> {formatDate(data.checkOut)} <span className="font-bold text-red-700">CHECK OUT:</span> <span className="font-bold text-red-700 underline">13:00 HRS</span></div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex gap-2"><span>•</span><span className="font-bold">TIPO DE HABITACIÓN:</span><span>{displayRoomType}</span></div>
-                  <div className="flex gap-2"><span>•</span><span className="font-bold">COSTO POR NOCHE:</span><span>{formatMoney(summary.pricePerNight)}</span></div>
-                  {hasExtraPersons && (<div className="flex gap-2 text-blue-900"><span>•</span><span className="font-bold">PERSONAS EXTRAS ({data.extraPersons}):</span><span>{formatMoney(extraPersonTotal)} (${EXTRA_PERSON_COST} c/u)</span></div>)}
-                  <div className="flex gap-2"><span>•</span><span className="font-bold">TOTAL, DE {data.numberOfRooms} HABITACI{data.numberOfRooms > 1 ? 'ONES' : 'ON'} POR {summary.nights} NOCHE{summary.nights !== 1 ? 'S' : ''}:</span><span className="font-bold">{formatMoney(summary.totalCost)}</span></div>
-                  <div className="flex gap-2"><span>•</span><span className="font-bold">DESAYUNO CONTINENTAL INCLUIDO:</span><span className="font-bold text-red-700">(CAFÉ, PAN Y FRUTA)</span></div>
+              <div className="mb-6 text-xs text-justify leading-relaxed">
+                Estimado/a {data.firstName} {data.lastName}, es un placer confirmar tu próxima visita. Hemos preparado cada detalle para que disfrutes de una experiencia inolvidable con nosotros. A continuación, los detalles de tu reservación:
+              </div>
+
+              <div className="mb-6">
+                <h4 className="font-bold text-sm mb-3 uppercase tracking-wide">Detalles de la Reserva:</h4>
+                <div className="space-y-1 text-xs">
+                  <div className="flex gap-1"><span>❖</span><span className="font-bold">Número de Confirmación:</span><span className="uppercase">{summary.folio}</span></div>
+                  <div className="flex gap-1"><span>❖</span><span className="font-bold">Check-in:</span><span>{formatDate(data.checkIn)} | 15:00 hrs</span></div>
+                  <div className="flex gap-1"><span>❖</span><span className="font-bold">Check-out:</span><span>{formatDate(data.checkOut)} | 13:00 hrs</span></div>
+                  <div className="flex gap-1">
+                    <span>❖</span>
+                    <span className="font-bold">Habitación:</span>
+                    <span className="uppercase">
+                      {(() => {
+                        if (summary.roomBreakdown && summary.roomBreakdown.length > 0) {
+                          const totalRooms = summary.roomBreakdown.reduce(
+                            (sum, room) => sum + room.quantity,
+                            0
+                          );
+                          const roomTypesLabel = summary.roomBreakdown
+                            .map((room) => `${room.quantity} ${room.roomType}`)
+                            .join(' + ');
+                          return `${roomTypesLabel} (${totalRooms} habitación${totalRooms > 1 ? 'es' : ''}, ${summary.nights} noche${summary.nights !== 1 ? 's' : ''})`;
+                        }
+                        return `${displayRoomType} (${data.numberOfRooms} habitación${data.numberOfRooms > 1 ? 'es' : ''}, ${summary.nights} noche${summary.nights !== 1 ? 's' : ''})`;
+                      })()}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mb-6 font-normal">
-                <h4 className="font-bold border-b border-black inline-block mb-3 text-sm">POLITICAS DE RESERVACIÓN</h4>
-                <div className="text-xs space-y-3 text-justify leading-relaxed tracking-normal">
-                  <p>Le proporcionamos el número de cuenta bancaria para realizar el depósito correspondiente a la primera noche de su hospedaje <span className="font-bold text-red-700">5 días previos</span> a su llegada, en caso de <span className="font-bold">TRANSFERENCIA</span> favor de capturar como referencia su <span className="font-bold">NÚMERO DE RESERVA</span> y enviar el comprobante a <span className="text-blue-700 underline font-bold">hoteltalaveratez@gmail.com</span> o vía WhatsApp al número <span className="font-bold">231-145-6385</span> favor de considerar la fecha límite que se le indique para realizar su pago a fin de garantizar su reservación.</p>
+              <div className="mb-6">
+                <h4 className="font-bold text-sm mb-3 uppercase tracking-wide">Información de Pago:</h4>
+                <div className="space-y-1 text-xs">
+                  {summary.roomBreakdown && summary.roomBreakdown.length > 0 ? (
+                    <>
+                      {summary.roomBreakdown.map((room, idx) => (
+                        <div key={idx} className="flex gap-1">
+                          <span>❖</span>
+                          <span className="font-bold">{room.roomType.toUpperCase()}:</span>
+                          <span>{room.quantity} habitación{room.quantity > 1 ? 'es' : ''} x {summary.nights} noche{summary.nights !== 1 ? 's' : ''} = {formatMoney(room.subtotal)}</span>
+                          <span className="text-gray-500">({formatMoney(room.pricePerNight)}/noche)</span>
+                        </div>
+                      ))}
+                      {hasExtraPersons && (
+                        <div className="flex gap-1 text-blue-900">
+                          <span>❖</span>
+                          <span className="font-bold">Personas extras ({data.extraPersons}):</span>
+                          <span>{formatMoney(extraPersonTotal)} (${EXTRA_PERSON_COST} c/u)</span>
+                        </div>
+                      )}
+                      <div className="flex gap-1 pt-2 border-t border-gray-300">
+                        <span>❖</span>
+                        <span className="font-bold">TOTAL A PAGAR:</span>
+                        <span className="font-bold text-[#1a237e]">{formatMoney(summary.totalCost)}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex gap-1"><span>❖</span><span className="font-bold">Costo por noche:</span><span>{formatMoney(summary.pricePerNight)}</span></div>
+                      <div className="flex gap-1"><span>❖</span><span className="font-bold">Total, de {data.numberOfRooms} habitación{data.numberOfRooms > 1 ? 'es' : ''} por {summary.nights} noche{summary.nights !== 1 ? 's' : ''}:</span><span className="font-bold">{formatMoney(summary.totalCost)}</span></div>
+                      {hasExtraPersons && (<div className="flex gap-1 text-blue-900"><span>❖</span><span className="font-bold">Personas extras ({data.extraPersons}):</span><span>{formatMoney(extraPersonTotal)} (${EXTRA_PERSON_COST} c/u)</span></div>)}
+                    </>
+                  )}
+                  <div className="flex gap-1"><span>❖</span><span className="font-bold">Incluye:</span><span className="uppercase">Desayuno Continental (Café, pieza de pan y fruta de temporada).</span> <span className="font-bold">Hasta 10:30 a.m. se puede solicitar.</span></div>
                 </div>
               </div>
 
-              <div className="text-center text-xs mb-6 space-y-1 uppercase tracking-wider">
-                <div className="font-bold">BANORTE</div>
-                <div className="font-bold">HOTEL TALAVERA S.A DE C.V</div>
-                <div>CUENTA: <span className="font-bold text-red-700">11 70 36 32 43</span> (SOLO DE BANORTE A BANORTE)</div>
-                <div>CLABE: <span className="font-bold text-red-700">07 26 72 01 17 03 63 24 34</span> (DE OTROS BANCOS A BANORTE)</div>
+              <div className="mb-6">
+                <h4 className="font-bold text-sm mb-3 uppercase tracking-wide">Pasos importantes para garantizar tu reserva:</h4>
+                <div className="text-xs text-justify leading-relaxed">
+                  <p className="mb-3">Para asegurar tu habitación, requerimos el depósito de su habitación (pago completo, no parcial) a más tardar <span className="font-bold underline">5 días antes de tu llegada.</span></p>
+                </div>
               </div>
 
-              <div className="text-xs mb-6 text-justify font-normal leading-relaxed tracking-normal">
-                <span className="font-bold">POLÍTICAS DE CANCELACIÓN.</span> Para cancelar una reservación favor de considerar <span className="font-bold text-red-700">72</span> horas previas a la fecha de llegada, de lo contrario no hay reembolso.
+              <div className="mb-6 border-2 border-[#1a237e] rounded-lg p-4 bg-gray-50">
+                <h4 className="font-bold text-sm mb-3 text-center uppercase tracking-wide text-[#1a237e]">Datos Bancarios (Banorte):</h4>
+                <div className="text-xs space-y-1.5">
+                  <div className="text-center font-bold">Nombre: <span className="text-[#1a237e]">Hotel Talavera S.A. de C.V.</span></div>
+                  <div className="text-center">Cuenta: <span className="font-bold text-[#1a237e]">11 70 36 32 43</span> (Solo Banorte a Banorte)</div>
+                  <div className="text-center">CLABE: <span className="font-bold text-[#1a237e]">07 26 72 01 17 03 63 24 34</span> (Otros bancos)</div>
+                  <div className="text-center mt-2 pt-2 border-t border-gray-300">Referencia: <span className="font-bold">Tu número de reserva</span></div>
+                </div>
               </div>
 
-              <div className="text-xs mb-8 text-justify font-normal leading-relaxed tracking-normal">
-                <div className="mb-1 font-bold">¿Requiere FACTURA?</div>
-                <div>De ser así por favor envíe vía WhatsApp al número <span className="font-bold">231-145-6385</span> su <span className="font-bold">CONSTANCIA DE SITUACIÓN FISCAL.</span></div>
-                <div className="mt-8 text-center text-[#1a237e] text-sm font-bold uppercase">Hotel Talavera agradece su preferencia, ¡Esperamos que disfrute su estancia!</div>
+              <div className="mb-4 text-xs text-justify leading-relaxed">
+                <p className="mb-2">Por favor, envía tu comprobante a <span className="font-bold text-blue-700">hoteltalaveratez@gmail.com</span> o por WhatsApp al <span className="font-bold">231-145-6385.</span></p>
+              </div>
+
+              <div className="mb-4">
+                <h4 className="font-bold text-sm mb-2 uppercase tracking-wide">Información Adicional:</h4>
+                <div className="text-xs space-y-2">
+                  <p className="text-justify"><span className="font-bold">Cancelaciones:</span> Sin costo hasta <span className="font-bold underline">48 horas antes</span> de tu llegada. Después de este plazo, no aplica reembolso.</p>
+                  <p className="text-justify"><span className="font-bold">Facturación:</span> Si requieres factura, envíanos tu Constancia de Situación Fiscal vía WhatsApp.</p>
+                </div>
+              </div>
+
+              <div className="text-xs text-center leading-relaxed">
+                <p>En caso de requerir un horario extendido, te solicitará un pago extra (sujeto a disponibilidad de la habitación). <span className="font-bold">Salida Tardía (Después de las 1:15 PM):</span> Se aplicará un cargo adicional de $200.00 por hora o fracción según el tipo de habitación. Estos montos son independientes a la tarifa de la temporada.</p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t-2 border-[#c68652] text-center">
+                <p className="text-sm font-bold text-[#1a237e] uppercase tracking-wide">¡Todo listo para tu estancia en Hotel Talavera!</p>
               </div>
 
               <div className="mt-auto">

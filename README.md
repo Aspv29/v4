@@ -26,16 +26,25 @@
 
 ## Funcionalidades Premium
 
-### Sistema de Reservaciones de Hospedaje
-- Formulario completo: nombre, fechas check-in/check-out, tipo de habitacion, numero de habitaciones, personas extra
-- Calculo automatico de costos por noche, noches totales, cargos extra (suites)
-- Generacion de folio unico basado en apellido + fecha
-- Vista previa en tiempo real (Live Preview) con datos del huesped
-- Generacion de PDF profesional de confirmacion con:
-  - Logo SVG de alta resolucion (8 petalos Talavera)
-  - Politicas de reservacion y cancelacion
-  - Datos bancarios (BANORTE) para deposito
-  - Tabla de costos por ingreso anticipado / salida tardia
+### ✨ Sistema de Reservaciones de Hospedaje (ACTUALIZADO v4.0)
+- **Formulario completo mejorado**: nombre, fechas check-in/check-out, tipo de habitacion, numero de habitaciones, personas extra
+- **Modo Multi-Habitación**: Permite seleccionar diferentes tipos de habitación para cada reserva
+  - Toggle para activar/desactivar modo multi-habitación
+  - Selector individual de tipo de habitación por cada habitación solicitada
+  - Cálculo automático y separado de costos por tipo de habitación
+  - Desglose detallado en el mensaje de confirmación
+- **Cálculo automático inteligente**: costos por noche, noches totales, cargos extra (suites), totales por tipo de habitación
+- **Generación de folio único** basado en apellido + fecha
+- **Vista previa en tiempo real (Live Preview)** con diseño actualizado:
+  - Logo ornamental SVG de 8 pétalos estilo Talavera (NUEVO DISEÑO)
+  - Texto "HOTEL TALAVERA" con decoración ornamental
+  - Formato de mensaje actualizado según diseño proporcionado
+  - Desglose de habitaciones con subtotales cuando hay múltiples tipos
+- **Generación de PDF profesional** de confirmación con:
+  - Logo SVG de alta resolución (diseño ornamental de 8 pétalos)
+  - Políticas de reservación y cancelación
+  - Datos bancarios (BANORTE) para depósito
+  - Tabla de costos por ingreso anticipado / salida tardía
   - Aviso de privacidad
 
 ### Sistema de Eventos en Terraza
@@ -56,12 +65,16 @@
   - Bebidas (9 opciones)
 - Precios actualizados en pesos MXN
 
-### Compartir por WhatsApp
-- Envio directo a WhatsApp sin necesidad de agregar contacto
-- Soporte para PDF e imagenes
-- Selector de codigo de pais
-- Validacion de numero telefonico
-- Compartir multiples documentos
+### 💬 Compartir por WhatsApp (MEJORADO v4.0)
+- **Chat directo de WhatsApp integrado**: Nueva función para abrir WhatsApp directamente
+  - Ingreso de número telefónico con lada
+  - Botón dedicado para abrir WhatsApp sin adjuntar archivos
+  - Ideal para contacto directo con clientes
+- **Envío de confirmaciones**: Sin necesidad de agregar contacto
+- **Soporte completo**: PDF e imágenes
+- **Selector de código de país**: Validación internacional
+- **Validación de número telefónico**: Formato correcto garantizado
+- **Compartir múltiples documentos**: En una sola acción
 
 ### Sistema de Archivos (Archives)
 - Guardado automatico de reservaciones en localStorage
@@ -127,13 +140,15 @@ v4/
 ├── sw.js                            # Service Worker
 │
 ├── components/
-│   ├── BookingForm.tsx              # Formulario de reservacion
-│   ├── LivePreview.tsx              # Vista previa en tiempo real
+│   ├── BookingForm.tsx              # Formulario de reservacion (ACTUALIZADO - Multi-habitación)
+│   ├── MultiRoomSelector.tsx        # Selector de múltiples tipos de habitación (NUEVO v4.0)
+│   ├── LivePreview.tsx              # Vista previa en tiempo real (ACTUALIZADO - Nuevo diseño)
 │   ├── LockScreen.tsx               # Pantalla de bloqueo/autenticacion
 │   ├── Archives.tsx                 # Historial de reservaciones
 │   ├── TerraceEventForm.tsx         # Formulario de eventos en terraza
-│   ├── Logo.tsx                     # Componente SVG del logo Talavera
+│   ├── Logo.tsx                     # Componente SVG del logo Talavera (ACTUALIZADO - Diseño ornamental)
 │   ├── WhatsAppShareDialog.tsx      # Dialogo para compartir por WhatsApp
+│   ├── WhatsAppDirectChat.tsx       # Chat directo de WhatsApp (NUEVO v4.0)
 │   └── WhatsAppShareDialog.css      # Estilos del dialogo WhatsApp
 │
 ├── services/
@@ -210,9 +225,11 @@ npm run build
 # Sincronizar con Android
 npm run cap:sync
 
-# Compilar APK
-npm run build:android
-cd android && ./gradlew assembleDebug
+# Compilar APK (Requiere Android SDK - ver BUILD_ANDROID.md)
+npm run create-debug-apk
+
+# O usar el script automático
+./build-apk.sh
 
 # Desarrollo Electron (Windows/Linux/Mac)
 npm run electron:dev
@@ -220,6 +237,30 @@ npm run electron:dev
 # Compilar Electron
 npm run electron:build
 ```
+
+## 📱 Compilación de APK para Android
+
+**IMPORTANTE**: La compilación de APK requiere Android SDK instalado en tu sistema.
+
+### Opción 1: Script Automático (Recomendado)
+```bash
+./build-apk.sh
+```
+
+### Opción 2: Comandos npm
+```bash
+npm run create-debug-apk
+```
+
+### Requisitos Previos
+- Java JDK 17 o superior
+- Android SDK (vía Android Studio o Command Line Tools)
+- Variables de entorno configuradas (JAVA_HOME, ANDROID_HOME)
+
+**Ver guía completa**: [BUILD_ANDROID.md](BUILD_ANDROID.md)
+
+### Nota sobre Sandbox
+Este proyecto incluye configuración completa para Android, pero la compilación del APK debe realizarse en un entorno con Android SDK. El sandbox actual no tiene Android SDK instalado.
 
 ---
 
