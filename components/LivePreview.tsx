@@ -144,7 +144,7 @@ const LivePreview = forwardRef<HTMLDivElement, LivePreviewProps>(({ data, summar
               </div>
 
               <div className="text-xs text-center leading-relaxed">
-                <p>En caso de requerir un horario extendido, te solicitará un pago extra (sujeto a disponibilidad de la habitación). <span className="font-bold">Salida Tardía (Después de las 1:15 PM):</span> Se aplicará un cargo adicional de $200.00 por hora o fracción según el tipo de habitación. Esto montos son independientes a la tarifa de la temporada. Estos montos son independientes de temporada.</p>
+                <p>En caso de requerir un horario extendido, te solicitará un pago extra (sujeto a disponibilidad de la habitación). <span className="font-bold">Salida Tardía (Después de las 1:15 PM):</span> Se aplicará un cargo adicional de $200.00 por hora o fracción según el tipo de habitación. Estos montos son independientes a la tarifa de la temporada.</p>
               </div>
 
               <div className="mt-6 pt-4 border-t-2 border-[#c68652] text-center">
