@@ -52,7 +52,7 @@ const WhatsAppDirectChat: React.FC<WhatsAppDirectChatProps> = ({ isOpen, onClose
     // Open WhatsApp with the phone number
     const fullNumber = `${countryCode}${cleanPhone}`.replace(/[^0-9]/g, '');
     const whatsappUrl = `https://wa.me/${fullNumber}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     setPhoneNumber('');
     onClose();
