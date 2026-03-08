@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 
 interface WhatsAppDirectChatProps {
@@ -10,6 +10,14 @@ const WhatsAppDirectChat: React.FC<WhatsAppDirectChatProps> = ({ isOpen, onClose
   const [countryCode, setCountryCode] = useState('+52');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      setPhoneNumber('');
+      setError('');
+      setCountryCode('+52');
+    }
+  }, [isOpen]);
 
   const countryCodes = [
     { code: '+1', country: 'USA/Canadá' },
