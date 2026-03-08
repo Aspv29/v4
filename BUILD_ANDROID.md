@@ -152,7 +152,7 @@ chmod +x android/gradlew
 
 ### En emulador:
 ```bash
-adb install TalaveraV4-debug.apk
+adb install TalaveraV3-debug.apk
 ```
 
 ## Características de la Aplicación
