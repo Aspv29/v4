@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Script de compilación de APK para Hotel Talavera v3
+# Script de compilación de APK para Hotel Talavera v4
 # Este script automatiza el proceso de compilación completo
 
 set -e  # Salir si hay errores
 
 echo "======================================"
-echo "Hotel Talavera v3 - APK Builder"
+echo "Hotel Talavera v4 - APK Builder"
 echo "======================================"
 echo ""
 
@@ -95,22 +95,22 @@ success "APK compilado exitosamente"
 
 # Copiar APK a la raíz
 info "Copiando APK a la raíz del proyecto..."
-cp android/app/build/outputs/apk/debug/app-debug.apk TalaveraV3-debug.apk || error "Error al copiar APK"
-success "APK copiado como: TalaveraV3-debug.apk"
+cp android/app/build/outputs/apk/debug/app-debug.apk TalaveraV4-debug.apk || error "Error al copiar APK"
+success "APK copiado como: TalaveraV4-debug.apk"
 
 # Obtener información del APK
-APK_SIZE=$(du -h TalaveraV3-debug.apk | cut -f1)
+APK_SIZE=$(du -h TalaveraV4-debug.apk | cut -f1)
 
 echo ""
 echo "======================================"
 echo -e "${GREEN}✓ Compilación exitosa${NC}"
 echo "======================================"
 echo ""
-echo "APK generado: TalaveraV3-debug.apk"
+echo "APK generado: TalaveraV4-debug.apk"
 echo "Tamaño: $APK_SIZE"
 echo ""
 echo "Para instalar en tu dispositivo:"
-echo "  adb install TalaveraV3-debug.apk"
+echo "  adb install TalaveraV4-debug.apk"
 echo ""
 echo "O transfiere el archivo al dispositivo e instálalo manualmente."
 echo ""
