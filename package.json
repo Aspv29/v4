@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "cap:sync": "npx cap sync android",
     "build:android": "npm run build && npm run cap:sync",
-    "create-debug-apk": "npm run build:android && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ../TalaveraV3-debug.apk",
+    "create-debug-apk": "npm run build:android && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ../TalaveraV4-debug.apk",
     "electron:dev": "concurrently \"npm run dev\" \"electron .\"",
     "electron:build": "npm run build && electron-builder",
     "electron:build:win": "npm run build && electron-builder --win --x64"
@@ -43,7 +43,7 @@
   },
   "build": {
     "appId": "com.talavera.confirmacion",
-    "productName": "Talavera v3",
+    "productName": "Talavera v4",
     "directories": {
       "output": "dist-electron"
     },
@@ -60,7 +60,7 @@
         }
       ],
       "icon": "build/icon.ico",
-      "artifactName": "TalaveraV3-Setup-${version}.${ext}",
+      "artifactName": "TalaveraV4-Setup-${version}.${ext}",
       "requestedExecutionLevel": "asInvoker"
     },
     "nsis": {
@@ -70,7 +70,7 @@
       "deleteAppDataOnUninstall": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Talavera v3"
+      "shortcutName": "Talavera v4"
     }
   }
 }
